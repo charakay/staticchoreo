@@ -1,13 +1,13 @@
 schemaVersion: "1.2"
-name: hello-choreo
+name: hello-choreo-php
 services:
   - name: web
     type: webapp
     build:
       dockerfile: Dockerfile
     endpoints:
-      - name: my-service-endpoint
-        displayName: My Service Endpoint
+      - name: http
+        displayName: HTTP Endpoint
         service:
           basePath: /
           port: 8080
