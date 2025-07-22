@@ -10,7 +10,7 @@ services:
         displayName: My Service Endpoint
         service:
           basePath: /
-          port: 80
+          port: 8080
         type: REST
         networkVisibilities:
           - Public
