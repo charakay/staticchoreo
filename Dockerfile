@@ -1,19 +1,28 @@
-FROM nginx:alpine
+FROM php:8.2-cli
 
-# Create a non-root user and group (e.g., user id 1001)
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+WORKDIR /app
 
-# Copy files to nginx html folder
-COPY . /usr/share/nginx/html
+# Copy all app files
+COPY . /app
 
-# Change ownership of the nginx html folder to the new user
-RUN chown -R appuser:appgroup /usr/share/nginx/html
+# Create a non-root user choreo with UID 10014
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid 10014 \
+    choreo
 
-# Run nginx as non-root user
-USER appuser
+# Change ownership of app files to choreo user
+RUN chown -R choreo:choreo /app
 
-# Expose port 80 (default nginx port)
-EXPOSE 80
+# Switch to non-root user 'choreo'
+USER choreo
 
-# Start nginx (already default CMD in nginx image, so optional)
-CMD ["nginx", "-g", "daemon off;"]
+# Expose port 8080 (php built-in server)
+EXPOSE 8080
+
+# Start PHP built-in server listening on all interfaces
+CMD ["php", "-S", "0.0.0.0:8080"]
