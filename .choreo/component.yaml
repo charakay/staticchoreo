@@ -1,0 +1,16 @@
+schemaVersion: "1.2"
+name: hello-choreo
+services:
+  - name: web
+    type: webapp
+    build:
+      dockerfile: Dockerfile
+    endpoints:
+      - name: my-service-endpoint
+        displayName: My Service Endpoint
+        service:
+          basePath: /
+          port: 80
+        type: REST
+        networkVisibilities:
+          - Public
