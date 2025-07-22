@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy all app files
 COPY . /app
 
-# Create a non-root user choreo with UID 10014
+# Create non-root user choreo with UID 10014
 RUN adduser \
     --disabled-password \
     --gecos "" \
@@ -18,11 +18,11 @@ RUN adduser \
 # Change ownership of app files to choreo user
 RUN chown -R choreo:choreo /app
 
-# Switch to non-root user 'choreo'
+# Switch to non-root user choreo
 USER choreo
 
-# Expose port 8080 (php built-in server)
+# Expose port 8080
 EXPOSE 8080
 
-# Start PHP built-in server listening on all interfaces
+# Run PHP built-in web server
 CMD ["php", "-S", "0.0.0.0:8080"]
